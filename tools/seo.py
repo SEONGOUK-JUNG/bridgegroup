@@ -142,3 +142,6 @@ if not config.exists():config.write_text(json.dumps({'key':secrets.token_hex(16)
 key=json.loads(config.read_text(encoding='utf-8'))['key']
 (DOCS/(key+'.txt')).write_text(key,encoding='utf-8')
 print('Updated search metadata for',len(LANGS),'languages; sitemap, robots, organization graph, llms.txt and IndexNow verification created.')
+
+# Minimal URL-only sitemap: an independent supported format for crawler diagnostics.
+(DOCS/'sitemap.txt').write_text(''.join(url(lang)+'\n' for lang in LANGS),encoding='utf-8')

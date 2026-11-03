@@ -43,3 +43,7 @@ index = ET.parse(docs/'sitemap-index.xml').getroot()
 assert index.tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}sitemapindex'
 assert [e.text for e in index.findall('s:sitemap/s:loc', ns)] == ['https://bridgegroup.asia/sitemap.xml']
 print('PASS: 17 language pages, metadata, 18 hreflangs each, JSON-LD, sitemap and referenced local assets.')
+
+text_urls=(docs/'sitemap.txt').read_text(encoding='utf-8').splitlines()
+assert len(text_urls)==17 and set(text_urls)==urls
+print('PASS: URL-only text sitemap matches all 17 canonical language URLs.')
