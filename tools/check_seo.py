@@ -38,5 +38,8 @@ ns = {'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
 root = ET.parse(docs/'sitemap.xml').getroot()
 assert {e.text for e in root.findall('s:url/s:loc', ns)} == urls
 assert (docs/'CNAME').read_text().strip() == 'bridgegroup.asia'
-assert 'Sitemap: https://bridgegroup.asia/sitemap.xml' in (docs/'robots.txt').read_text()
+assert 'Sitemap: https://bridgegroup.asia/sitemap-index.xml' in (docs/'robots.txt').read_text()
+index = ET.parse(docs/'sitemap-index.xml').getroot()
+assert index.tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}sitemapindex'
+assert [e.text for e in index.findall('s:sitemap/s:loc', ns)] == ['https://bridgegroup.asia/sitemap.xml']
 print('PASS: 17 language pages, metadata, 18 hreflangs each, JSON-LD, sitemap and referenced local assets.')

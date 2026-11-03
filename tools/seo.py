@@ -121,7 +121,7 @@ The translated BRIDGE GROUP pages share company website preview images with the 
 Source: the published BRIDGE GROUP company directory and the official company websites linked above.
 '''
 (DOCS/'llms.txt').write_text(facts,encoding='utf-8')
-(DOCS/'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: https://bridgegroup.asia/sitemap.xml\n',encoding='utf-8')
+(DOCS/'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: https://bridgegroup.asia/sitemap-index.xml\n',encoding='utf-8')
 NS='http://www.sitemaps.org/schemas/sitemap/0.9';XHTML='http://www.w3.org/1999/xhtml'
 ET.register_namespace('',NS);ET.register_namespace('xhtml',XHTML)
 site=ET.Element('{'+NS+'}urlset')
@@ -131,6 +131,11 @@ for lang in LANGS:
     for other in LANGS+['x-default']:ET.SubElement(node,'{'+XHTML+'}link',rel='alternate',hreflang=other,href=url('ko' if other=='x-default' else other))
 ET.indent(site)
 (DOCS/'sitemap.xml').write_bytes(ET.tostring(site,encoding='utf-8',xml_declaration=True))
+index=ET.Element('{'+NS+'}sitemapindex')
+entry=ET.SubElement(index,'{'+NS+'}sitemap')
+ET.SubElement(entry,'{'+NS+'}loc').text=ORIGIN+'/sitemap.xml'
+ET.indent(index)
+(DOCS/'sitemap-index.xml').write_bytes(ET.tostring(index,encoding='utf-8',xml_declaration=True))
 (DOCS/'assets/favicon.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 32"><rect width="40" height="32" rx="6" fill="#071c28"/><circle cx="13" cy="16" r="10" fill="none" stroke="#59aac5" stroke-width="4"/><circle cx="27" cy="16" r="10" fill="none" stroke="#50b989" stroke-width="4"/></svg>',encoding='utf-8')
 config=ROOT/'tools/indexnow.json'
 if not config.exists():config.write_text(json.dumps({'key':secrets.token_hex(16)},indent=2),encoding='utf-8')

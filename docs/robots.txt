@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bridgegroup.asia/sitemap.xml
+Sitemap: https://bridgegroup.asia/sitemap-index.xml
